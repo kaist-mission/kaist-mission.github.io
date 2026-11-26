@@ -1,0 +1,50 @@
+---
+// 내용은 src/data/center.ts에서 고치면 됩니다.
+import Layout from '~/layouts/PageLayout.astro';
+import SubpageHeader from '~/components/site/SubpageHeader.astro';
+import Section from '~/components/site/Section.astro';
+import BulletList from '~/components/site/BulletList.astro';
+import KakaoMap from '~/components/site/KakaoMap.astro';
+import { CENTER_APPLY_URL } from '~/navigation';
+import { center, facts, rules } from '~/data/center';
+
+const metadata = {
+  title: 'KAIST 선교센터',
+  description: '대전 내동에 있는 KAIST 선교센터의 소개, 시설 현황, 이용 수칙을 안내합니다.',
+};
+
+const { contact } = center;
+---
+
+<Layout metadata={metadata}>
+  <SubpageHeader title="KAIST 선교센터" image={center.image} imageAlt={center.imageAlt} position={center.position}>
+    {center.intro}
+  </SubpageHeader>
+
+  <Section title="위치">
+    <p class="mb-5">{center.address} ({center.addressOld})</p>
+    <KakaoMap address={center.address} />
+  </Section>
+
+  <Section title="시설 현황">
+    <BulletList items={facts} />
+  </Section>
+
+  <Section title="이용 수칙">
+    <BulletList items={rules} />
+  </Section>
+
+  <Section title="이용 신청">
+    <p>
+      선교센터를 이용하시려면 <a
+        class="font-medium text-primary underline underline-offset-4 hover:no-underline"
+        href={CENTER_APPLY_URL || '#'}
+        {...(CENTER_APPLY_URL ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>신청서</a
+      >를 작성해 주세요. <span class="text-muted"
+        >(문의: {contact.name} <a class="hover:underline" href={`tel:${contact.phone.replaceAll('-', '')}`}
+          >{contact.phone}</a
+        >)</span
+      >
+    </p>
+  </Section>
+</Layout>

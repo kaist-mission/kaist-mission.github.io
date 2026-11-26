@@ -1,0 +1,68 @@
+site:
+  name: KAIST 교직원 선교회
+  site: 'https://kaist-mission.github.io'
+  base: '/'
+  trailingSlash: false
+
+  googleSiteVerificationId: null
+
+# Default SEO metadata
+metadata:
+  title:
+    default: KAIST 교직원 선교회
+    template: '%s — KAIST 교직원 선교회'
+  description: "KAIST 교직원들이 함께 예배하고, 말씀을 나누고, 서로를 위해 기도하는 신앙 공동체입니다."
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: KAIST 교직원 선교회
+    images:
+      - url: '~/assets/images/logo.jpg'
+        width: 150
+        height: 150
+    type: website
+
+i18n:
+  language: ko
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: false
+    postsPerPage: 8
+
+    post:
+      isEnabled: true
+      permalink: '/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null # or "G-XXXXXXXXXX"
+
+ui:
+  theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

@@ -1,0 +1,52 @@
+---
+// 글꼴: Pretendard (npm 패키지, src/layouts/Layout.astro에서 import)
+---
+
+<style is:inline>
+  /* 한글이 단어 중간에서 줄바꿈되지 않도록 */
+  body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  :root {
+    --aw-font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --aw-font-serif: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --aw-font-heading: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+    --aw-color-primary: rgb(17 85 167);
+    --aw-color-secondary: rgb(0 76 152);
+    --aw-color-accent: rgb(17 85 167);
+
+    --aw-color-text-heading: rgb(40 43 46);
+    --aw-color-text-default: rgb(40 43 46);
+    --aw-color-text-muted: rgb(40 43 46 / 70%);
+    --aw-color-bg-page: rgb(255 255 255);
+
+    --aw-color-bg-page-dark: rgb(8 9 10);
+
+    ::selection {
+      background-color: rgb(219 234 254);
+    }
+  }
+
+  .dark {
+    --aw-font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --aw-font-serif: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --aw-font-heading: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+    --aw-color-primary: rgb(36 155 214);
+    --aw-color-secondary: rgb(36 155 214);
+    --aw-color-accent: rgb(36 155 214);
+
+    --aw-color-text-heading: rgb(247, 248, 248);
+    --aw-color-text-default: rgb(229 236 246);
+    --aw-color-text-muted: rgb(229 236 246 / 66%);
+    --aw-color-bg-page: rgb(8 9 10);
+
+    ::selection {
+      background-color: black;
+      color: snow;
+    }
+  }
+</style>

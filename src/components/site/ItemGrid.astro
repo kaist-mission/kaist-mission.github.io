@@ -1,0 +1,55 @@
+---
+// 모든 페이지 공통 항목 목록: 2열 격자, 각 항목은 (사진) + 제목 + 설명 + (링크)
+import Picture from '~/components/site/Picture.astro';
+
+export interface Item {
+  title: string;
+  /** **글자**는 굵게 표시됩니다 */
+  description: string;
+  /** '~/assets/images/…' 또는 외부 주소 */
+  image?: string;
+  link?: { text: string; href: string };
+}
+
+export interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+
+const rich = (text: string) =>
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-heading">$1</strong>');
+
+const isExternal = (href: string) => href.startsWith('http');
+---
+
+<ul class="grid sm:grid-cols-2 gap-x-8 gap-y-10 md:gap-y-12">
+  {
+    items.map((item) => (
+      <li>
+        {item.image && (
+          <Picture
+            src={item.image}
+            sizes="(max-width: 640px) 100vw, 480px"
+            class="w-full aspect-[16/10] object-cover rounded-md bg-gray-100 mb-5"
+          />
+        )}
+        <h3 class="text-xl font-semibold text-heading">{item.title}</h3>
+        <p class="mt-2 text-base text-muted leading-relaxed text-justify" set:html={rich(item.description)} />
+        {item.link && (
+          <a
+            class="inline-block mt-3 text-base font-medium text-primary hover:underline"
+            href={item.link.href}
+            {...(isExternal(item.link.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {item.link.text} →
+          </a>
+        )}
+      </li>
+    ))
+  }
+</ul>

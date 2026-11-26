@@ -1,0 +1,67 @@
+---
+// 내용은 src/data/home.ts에서 고치면 됩니다.
+import Layout from '~/layouts/PageLayout.astro';
+import Button from '~/components/ui/Button.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import PageHero from '~/components/site/PageHero.astro';
+import Section from '~/components/site/Section.astro';
+import ItemGrid from '~/components/site/ItemGrid.astro';
+import { SITE, I18N } from 'astrowind:config';
+import { INSTAGRAM, CONTACT_EMAIL } from '~/navigation';
+import { hero, activities } from '~/data/home';
+
+const metadata = {
+  title: 'KAIST 교직원 선교회',
+  ignoreTitleTemplate: true,
+};
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE?.name,
+    url: SITE?.site,
+    inLanguage: I18N?.language,
+    sameAs: [INSTAGRAM],
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <StructuredData slot="head" schema={structuredData} />
+
+  <PageHero image={hero.image} position={hero.position}>
+    <Fragment slot="title">
+      <span class="text-[#249BD6]">KAIST</span>에서 함께 드리는<br />
+      예배와 기도
+    </Fragment>
+    <Fragment slot="subtitle">
+      KAIST 교직원 선교회는 같은 캠퍼스에서 일하는 교직원들이<span class="sm:hidden">&nbsp;</span><br
+        class="hidden sm:inline"
+      />
+      함께 기도하고 교제하며 복음의 동역자로 서는 공동체입니다.
+    </Fragment>
+    <Fragment slot="actions">
+      <Button
+        text="함께하기"
+        href="#contact"
+        class="bg-white text-primary border-white font-semibold hover:bg-white/90 hover:border-white/90"
+      />
+    </Fragment>
+  </PageHero>
+
+  <Section id="about" title="활동">
+    <ItemGrid items={activities} />
+  </Section>
+
+  <Section id="contact" title="문의">
+    <p>
+      <strong class="font-semibold">선교회에 함께하고 싶은 교직원분들</strong>, 그리고 <strong class="font-semibold"
+        >선교회의 후원이 필요한 KAIST 내 기독 단체</strong
+      >는 <a
+        class="font-medium text-primary underline underline-offset-4 hover:no-underline"
+        href={`mailto:${CONTACT_EMAIL}`}>메일</a
+      >로 연락해 주세요.
+    </p>
+  </Section>
+</Layout>
