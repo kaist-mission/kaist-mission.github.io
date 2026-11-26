@@ -2,9 +2,13 @@
 import { Image } from 'astro:assets';
 import { SITE } from 'astrowind:config';
 import logo from '~/assets/images/logo.jpg';
+
+// 이름 앞의 'KAIST'는 KAIST 파란색으로 표시
+const name = SITE?.name ?? '';
+const rest = name.startsWith('KAIST') ? name.slice('KAIST'.length) : null;
 ---
 
 <span class="self-center flex items-center gap-2.5 whitespace-nowrap">
   <Image src={logo} alt="" width={48} height={48} class="w-10 h-10 md:w-11 md:h-11 rounded-full" loading="eager" />
-  <span class="text-lg md:text-xl font-bold tracking-tight text-gray-900 dark:text-white">{SITE?.name}</span>
+  <span class="text-lg md:text-xl font-bold tracking-tight text-gray-900 dark:text-white">{rest === null ? name : <><span class="text-kaist">KAIST</span>{rest}</>}</span>
 </span>

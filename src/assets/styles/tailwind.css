@@ -17,6 +17,8 @@
   --color-default: var(--aw-color-text-default);
   --color-muted: var(--aw-color-text-muted);
   --color-link: var(--aw-color-link, var(--aw-color-primary));
+  /* 'KAIST' 글자 강조색 (KAIST 홈페이지의 밝은 파랑) */
+  --color-kaist: rgb(36 155 214);
 
   --font-sans:
     var(--aw-font-sans, ui-sans-serif), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
