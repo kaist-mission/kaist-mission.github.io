@@ -23,7 +23,7 @@ const { contact } = center;
 
   <Section title="위치">
     <p class="mb-5">{center.address} ({center.addressOld})</p>
-    <KakaoMap address={center.address} />
+    <KakaoMap timestamp={center.kakaoMap.timestamp} mapKey={center.kakaoMap.key} title={`${center.address} 지도`} />
   </Section>
 
   <Section title="시설 현황">

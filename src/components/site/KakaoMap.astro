@@ -1,14 +1,83 @@
 ---
-// 카카오맵 (키 없이 iframe으로 표시)
+// 카카오맵 '지도 퍼가기'(roughmap)
+// map.kakao.com > 공유 > 지도 퍼가기 에서 받은 timestamp와 key를 넣습니다.
+// 카카오의 설치 스크립트는 document.write를 쓰기 때문에, 페이지 이동(ClientRouter) 후에도
+// 안전하게 동작하도록 여기서 스크립트를 직접 불러온 뒤 지도를 그립니다.
 export interface Props {
-  address: string;
+  timestamp: string;
+  mapKey: string;
+  title?: string;
 }
 
-const { address } = Astro.props;
+const { timestamp, mapKey, title = '지도' } = Astro.props;
 ---
 
-<iframe
-  src={`https://map.kakao.com/?q=${encodeURIComponent(address)}`}
-  title={`${address} 지도`}
-  loading="lazy"
-  class="block w-full h-80 md:h-[28rem] rounded-md border border-gray-200 bg-gray-100"></iframe>
+<kakao-roughmap
+  data-timestamp={timestamp}
+  data-key={mapKey}
+  aria-label={title}
+  class="block w-full overflow-hidden rounded-md border border-gray-200"
+>
+  <div id={`daumRoughmapContainer${timestamp}`} class="root_daum_roughmap root_daum_roughmap_landing"></div>
+</kakao-roughmap>
+
+<script>
+  declare global {
+    interface Window {
+      daum?: { roughmap?: { Lander?: new (opts: Record<string, string>) => { render: () => void } } };
+    }
+  }
+
+  const LOADER = 'https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js';
+  let ready: Promise<void> | undefined;
+
+  // 설치 스크립트가 document.write로 넣으려는 <script>를 가로채 일반 방식으로 불러옵니다.
+  function loadRoughmap(): Promise<void> {
+    if (window.daum?.roughmap?.Lander) return Promise.resolve();
+    if (ready) return ready;
+    ready = new Promise((resolve, reject) => {
+      const originalWrite = document.write.bind(document);
+      document.write = (html: string) => {
+        document.write = originalWrite;
+        const src = /src="([^"]+)"/.exec(html)?.[1];
+        if (!src) return reject(new Error('roughmap lander not found'));
+        const lander = document.createElement('script');
+        lander.charset = 'UTF-8';
+        lander.src = src;
+        lander.onload = () => resolve();
+        lander.onerror = reject;
+        document.head.appendChild(lander);
+      };
+      const loader = document.createElement('script');
+      loader.charset = 'UTF-8';
+      loader.src = LOADER;
+      loader.onerror = (e) => {
+        document.write = originalWrite;
+        reject(e);
+      };
+      document.head.appendChild(loader);
+    });
+    return ready;
+  }
+
+  class KakaoRoughmap extends HTMLElement {
+    async connectedCallback() {
+      const { timestamp = '', key = '' } = this.dataset;
+      try {
+        await loadRoughmap();
+        const width = Math.round(this.clientWidth) || 640;
+        const height = width < 640 ? 300 : 400;
+        new window.daum!.roughmap!.Lander!({
+          timestamp,
+          key,
+          mapWidth: String(width),
+          mapHeight: String(height),
+        }).render();
+      } catch {
+        this.hidden = true;
+      }
+    }
+  }
+
+  if (!customElements.get('kakao-roughmap')) customElements.define('kakao-roughmap', KakaoRoughmap);
+</script>

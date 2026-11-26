@@ -10,6 +10,8 @@ export const center = {
   address: '대전광역시 서구 동서대로 997번길 14-10',
   addressOld: '내동 25-24',
   contact: { name: '노시경', phone: '042-350-2382' },
+  // 카카오맵 '지도 퍼가기' 코드의 timestamp와 key
+  kakaoMap: { timestamp: '1795672539011', key: '5z3towx7thz' },
 };
 
 export const facts: BulletItem[] = [
