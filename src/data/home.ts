@@ -25,7 +25,7 @@ export const activities: Item[] = [
     title: '정기 기도모임',
     description:
       '매주 **수요일 정오(12–1PM), N2 3층 313호(대강당 앞 건물)**에서 모입니다. 학교와 학생, 선교 현장, 그리고 서로의 삶을 위해 함께 기도하며 한 주의 중심을 다시 세웁니다.',
-    image: '~/assets/images/n2.jpg',
+    image: '~/assets/images/prayer.jpg',
   },
   {
     title: '선교 후원',
